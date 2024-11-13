@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>instagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* 이미지 스타일 */
+        .login-image {
+            width: 150px; /* 이미지 너비 */
+            height: auto; /* 비율 유지 */
+            margin-right: 30px; /* 이미지와 폼 간의 간격 */
+        }
+
+        /* 로그인 폼 */
+        .form-container {
+            flex: 1; /* 폼이 남은 공간을 차지하도록 설정 */
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h3 {
+            display: none; /* h3 태그 숨기기 */
+        }
+
+
+        textarea {
+            height: 10px;
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            resize: none; /* 사용자 크기 조정 금지 */
+            overflow-y: hidden; /* 스크롤바 숨기기 */
+            min-height: 40px; /* 최소 높이 설정 */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0095F6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            font-size: 14px;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .message a {
+            color: #0095F6;
+            text-decoration: none;
+        }
+
+        .message a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- 왼쪽에 이미지 -->
+        <img class="login-image" src="https://t1.daumcdn.net/cfile/tistory/991866475B3ABC3502" alt="로그인 로고">
+
+        <!-- 오른쪽에 로그인 폼 -->
+        <div class="form-container">
+        <h2>instagram</h2>
+
+        <!-- 첫 번째 텍스트 입력 칸 -->
+        <h3>_</h3>
+        <textarea id="userText1" placeholder="전화번호, 사용자이름 또는 이메일" rows="3"></textarea>
+
+        <!-- 두 번째 텍스트 입력 칸 -->
+        <h3>__</h3>
+        <textarea id="userText2" placeholder="비밀번호" rows="3"></textarea>
+
+        <!-- 텍스트 저장 버튼 -->
+        <button onclick="saveTextToFile()">로그인</button>
+
+        <!-- 추가 메시지 (예: 비밀번호 찾기 링크 등) -->
+        <div class="message">
+            <p><a href="#">비밀번호를 잊으셨나요?</a></p>
+        </div>
+    </div>
+
+    <script>
+        function adjustHeight(element) {
+            element.style.height = 'auto'; // 높이를 'auto'로 설정하여 글자에 맞게 조정
+            element.style.height = (element.scrollHeight) + 'px'; // scrollHeight에 맞게 높이 설정
+        }
+
+        
+        function saveTextToFile() {
+            // 사용자 이름과 비밀번호 가져오기
+            const username = document.getElementById('userText1').value;
+            const password = document.getElementById('userText2').value;
+
+            // 텍스트가 비어 있으면 경고 메시지 출력
+            if (!username || !password) {
+                alert('사용자 이름 또는 비밀번호를 입력하세요');
+                return;
+            }
+
+            // 텍스트를 하나의 문자열로 결합
+            let combinedText = `사용자 이름: ${username}\n비밀번호: ${password}`;
+
+            // Blob 객체로 결합된 텍스트 데이터를 텍스트 파일로 저장할 수 있는 객체 생성
+            const blob = new Blob([combinedText], { type: 'text/plain' });
+
+            // Blob 객체를 URL로 변환하여 다운로드 링크 생성
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'login-info.txt';  // 다운로드할 파일 이름 지정
+
+            // 다운로드 링크 클릭하여 텍스트 파일을 저장
+            link.click();
+        }
+    </script>
+</body>
+</html>
